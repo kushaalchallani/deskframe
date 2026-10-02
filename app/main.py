@@ -1,9 +1,8 @@
 import sys
 from pathlib import Path
-
 from PySide6.QtCore import Qt, QTimer
-from PySide6.QtGui import QPixmap, QImageReader
 from PySide6.QtWidgets import QApplication, QLabel, QWidget
+from image_utils import load_smart_crop
 
 
 class DeskFrame(QWidget):
@@ -46,20 +45,9 @@ class DeskFrame(QWidget):
 
         photo_path = self.photos[self.current_index]
 
-        reader = QImageReader(str(photo_path))
-        reader.setAutoTransform(True)
-
-        image = reader.read()
-
-        if image.isNull():
-            return
-
-        pixmap = QPixmap.fromImage(image)
-
-        pixmap = pixmap.scaled(
-            self.size(),
-            Qt.KeepAspectRatioByExpanding,
-            Qt.SmoothTransformation
+        pixmap = load_smart_crop(
+            photo_path,
+            (self.width(), self.height())
         )
 
         self.image_label.setPixmap(pixmap)
