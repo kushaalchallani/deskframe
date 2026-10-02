@@ -28,9 +28,9 @@ class DeskFrame(QWidget):
 
         # Scale the image to fit the widget
         pixmap = pixmap.scaled(
-            self.size(),
-            Qt.KeepAspectRatio,
-            Qt.SmoothTransformation
+        self.size(),
+        Qt.KeepAspectRatioByExpanding,
+        Qt.SmoothTransformation
         )
 
         self.image_label.setPixmap(pixmap)
