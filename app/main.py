@@ -75,6 +75,22 @@ class DeskFrame(QWidget):
 
         self.show_photo()
 
+    def mousePressEvent(self, event):
+        if event.button() == Qt.LeftButton:
+            self.drag_position = event.globalPosition().toPoint() - self.frameGeometry().topLeft()
+            event.accept()
+
+
+    def mouseMoveEvent(self, event):
+        if event.buttons() & Qt.LeftButton:
+            self.move(event.globalPosition().toPoint() - self.drag_position)
+            event.accept()
+
+
+    def mouseReleaseEvent(self, event):
+        if event.button() == Qt.LeftButton:
+            event.accept()
+
 
 def main():
     app = QApplication(sys.argv)
