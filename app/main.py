@@ -1,8 +1,9 @@
 import sys
 
 from PySide6.QtCore import Qt
-from PySide6.QtWidgets import QApplication, QWidget
-from PySide6.QtGui import QPainter
+from PySide6.QtGui import QPixmap
+from PySide6.QtWidgets import QApplication, QLabel, QWidget
+
 
 class DeskFrame(QWidget):
     def __init__(self):
@@ -10,7 +11,6 @@ class DeskFrame(QWidget):
 
         self.setWindowTitle("DeskFrame")
 
-        # Window appearance
         self.setWindowFlags(
             Qt.FramelessWindowHint |
             Qt.WindowStaysOnTopHint
@@ -18,17 +18,28 @@ class DeskFrame(QWidget):
 
         self.setAttribute(Qt.WA_TranslucentBackground)
 
-        # Widget size
         self.resize(300, 200)
 
-    def paintEvent(self, event):
-        painter = QPainter(self)
-        painter.setRenderHint(QPainter.Antialiasing)
+        # Create an image label
+        self.image_label = QLabel(self)
 
-        painter.setBrush(Qt.black)
-        painter.setPen(Qt.NoPen)
+        # Load the image
+        pixmap = QPixmap("assets/test.png")
 
-        painter.drawRoundedRect(self.rect(), 15, 15)
+        # Scale the image to fit the widget
+        pixmap = pixmap.scaled(
+            self.size(),
+            Qt.KeepAspectRatio,
+            Qt.SmoothTransformation
+        )
+
+        self.image_label.setPixmap(pixmap)
+
+        # Center the image
+        self.image_label.setAlignment(Qt.AlignCenter)
+
+        # Make the label fill the widget
+        self.image_label.resize(self.size())
 
 
 def main():
