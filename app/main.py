@@ -18,7 +18,7 @@ class DeskFrame(QWidget):
 
         self.setAttribute(Qt.WA_TranslucentBackground)
 
-        self.resize(350, 250)
+        self.resize(300, 200)
 
         self.image_label = QLabel(self)
         self.image_label.setAlignment(Qt.AlignCenter)
